@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+use function Pest\Laravel\delete;
+
 class UserController extends Controller
 {
     public readonly User $user;
@@ -51,9 +53,9 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(user $user)
     {
-        //
+        return view('user_show',['user'=> $user]);
     }
 
     /**
@@ -81,6 +83,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        
+        $this -> user -> where('id', $id)-> delete();
+
+        return redirect() -> route('users.index');
     }
 }
